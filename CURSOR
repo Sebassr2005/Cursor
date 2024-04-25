@@ -5,31 +5,23 @@ BEGIN
     DECLARE done INT DEFAULT FALSE;
     DECLARE nombre_cliente VARCHAR(100);
 
-    -- Declaración del cursor para seleccionar los nombres de los clientes
     DECLARE cur_clientes CURSOR FOR SELECT nombre FROM Clientes;
     
-    -- Manejador para no encontrarse ningún registro
     DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
 
-    -- Abrir el cursor
     OPEN cur_clientes;
 
-    -- Bucle para recorrer el cursor
     loop_cursor: LOOP
-        -- Obtener el próximo nombre de cliente
         FETCH cur_clientes INTO nombre_cliente;
 
-        -- Salir del bucle si no hay más registros
         IF done THEN
             LEAVE loop_cursor;
         END IF;
 
-        -- Mostrar el nombre del cliente
         SELECT nombre_cliente AS 'Nombre del Cliente';
 
     END LOOP;
 
-    -- Cerrar el cursor
     CLOSE cur_clientes;
     
 END //
